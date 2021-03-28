@@ -1,0 +1,1 @@
+Create a Rock Paper Scissors game between a human player and a computer to be played in browser.
