@@ -1,5 +1,5 @@
-// tic-tac-toe game to be played in browser console
-// this file gets imported into to html file
+// rock-paper-scissors game to be played in browser
+// this file gets imported into html file
 
 // gets a random move for the computer player
 function computerPlay() {
@@ -8,56 +8,73 @@ function computerPlay() {
     return el
 }
 
+// sets each players score to 0
+player_count = 0
+computer_count = 0
+
 // assigns the computers move
-// prompts the user for a move
+// gets the user for a move from button input
 // assigns a winner based on user and computer moves
+// displays scores and moves
 function round() {
     computerSelection = computerPlay()
-    playerSelection = prompt("Enter either 'rock', 'paper', or 'scissors': ").toLowerCase()
+    playerSelection = this.id
     if (computerSelection === playerSelection) {
-         console.log("It's a Tie!")
+        result.textContent = `Tie! Player score ${player_count}. Computer score ${computer_count}`
+        div.appendChild(result)
     } else if (playerSelection === "rock" && computerSelection === "scissors") {
-        console.log(`You win! ${playerSelection} beats ${computerSelection}`);
-        return "1"
+        player_count++
+        result.textContent = `You win! ${playerSelection} beats ${computerSelection}. Player score ${player_count}. Computer score ${computer_count}`
+        div.appendChild(result)
     } else if (playerSelection === "scissors" && computerSelection === "paper") {
-        console.log(`You win! ${playerSelection} beats ${computerSelection}`);
-        return "1"
+        player_count++
+        result.textContent = `You win! ${playerSelection} beats ${computerSelection}. Player score ${player_count}. Computer score ${computer_count}`
+        div.appendChild(result)
     } else if (playerSelection === "paper" && computerSelection === "rock") {
-        console.log(`You win! ${playerSelection} beats ${computerSelection}`);
-        return "1"
+        player_count++
+        result.textContent = `You win! ${playerSelection} beats ${computerSelection}. Player score ${player_count}. Computer score ${computer_count}`
+        div.appendChild(result)
     } else if (playerSelection === "rock" && computerSelection === "paper") {
-        console.log(`You lose! ${computerSelection} beats ${playerSelection}`);
-        return "0"
+        computer_count++
+        result.textContent = `You lose! ${computerSelection} beats ${playerSelection}. Player score ${player_count}. Computer score ${computer_count}`
+        div.appendChild(result)
     } else if (playerSelection === "paper" && computerSelection === "scissors") {
-        console.log(`You lose! ${computerSelection} beats ${playerSelection}`);
-        return "0"
+        computer_count++
+        result.textContent = `You lose! ${computerSelection} beats ${playerSelection}. Player score ${player_count}. Computer score ${computer_count}`
+        div.appendChild(result)
     } else if (playerSelection === "scissors" && computerSelection === "rock") {
-        console.log(`You lose! ${computerSelection} beats ${playerSelection}`);
-        return "0"
-    } 
-}  
-
-// main game logic
-// 5 rounds player with most points wins, else tie
-function game() {
-    player_count = 0
-    computer_count = 0
-    for (i = 0; i < 5; i++) {
-        result = round()
-        if (result === "1") {
-            player_count++
-        } else if (result === "0") {
-            computer_count++
+        computer_count++
+        result.textContent = `You lose! ${computerSelection} beats ${playerSelection}. Player score ${player_count}. Computer score ${computer_count}`
+        div.appendChild(result)
+    }
+    // assigns game winner if score limit is reached
+    // displays win/loss and displays scores
+    if (player_count > 4 || computer_count > 4) {
+        if (player_count > computer_count) {
+            result.textContent = `You have won the match! Player score ${player_count}. Computer score ${computer_count}`
+            div.appendChild(result)
+        } else if (player_count < computer_count) {
+            result.textContent = `You have lost the match! Player score ${player_count}. Computer score ${computer_count}`
+            div.appendChild(result)
+        } else {
+            result.textContent = `The match is a tie! Player score ${player_count}. Computer score ${computer_count}`
+            div.appendChild(result)
         }
-    } if (player_count > computer_count) {
-        console.log("You have won the match!")
-    } else if (player_count < computer_count) {
-        console.log("You have lost the match!")
-    } else {
-        console.log("The match is a tie!")
     }
 }
 
-// calls game to be played
-game()
+// assign div constant
+const div = document.querySelector(".div")
 
+
+// sets a click of a button to initiate a round of gameplay
+document.getElementById('rock').onclick = round;
+document.getElementById('paper').onclick = round;
+document.getElementById('scissors').onclick = round;
+
+
+// creates result section for displaying info
+const result = document.createElement("result")
+result.classList.add("result")
+result.textContent = "Results"
+div.appendChild(result)
